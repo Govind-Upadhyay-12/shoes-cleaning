@@ -8,13 +8,28 @@ type BrandLogoProps = {
   className?: string;
   /** Full wordmark logo vs icon mark only */
   variant?: "full" | "mark";
+  /** Where the logo sits — controls default size */
+  size?: "nav" | "footer" | "lg";
   priority?: boolean;
 };
+
+const FULL_SIZES = {
+  nav: "h-12 w-auto max-w-[min(100%,14rem)] sm:h-[3.5rem] sm:max-w-none md:h-16",
+  footer: "h-14 w-auto sm:h-16",
+  lg: "h-16 w-auto sm:h-20",
+} as const;
+
+const MARK_SIZES = {
+  nav: "h-10 w-10 sm:h-11 sm:w-11",
+  footer: "h-11 w-11",
+  lg: "h-14 w-14",
+} as const;
 
 export function BrandLogo({
   href = "/",
   className,
   variant = "full",
+  size = "nav",
   priority = false,
 }: BrandLogoProps) {
   const isFull = variant === "full";
@@ -27,12 +42,12 @@ export function BrandLogo({
           : "/images/plugzzy-clean-mark.png"
       }
       alt={BRAND.name}
-      width={isFull ? 220 : 40}
-      height={isFull ? 72 : 40}
+      width={isFull ? 560 : 160}
+      height={isFull ? 180 : 160}
       priority={priority}
       className={cn(
-        "h-auto w-auto object-contain",
-        isFull ? "h-9 sm:h-10" : "h-8 w-8",
+        "object-contain object-left",
+        isFull ? FULL_SIZES[size] : MARK_SIZES[size],
         className
       )}
     />
@@ -43,7 +58,7 @@ export function BrandLogo({
   return (
     <Link
       href={href}
-      className="inline-flex items-center"
+      className="inline-flex shrink-0 items-center"
       aria-label={BRAND.name}
     >
       {image}

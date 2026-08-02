@@ -14,7 +14,7 @@ export function Footer() {
     <footer className="border-t border-border bg-white">
       <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-12 sm:px-6 md:flex-row md:items-center md:justify-between">
         <div>
-          <BrandLogo />
+          <BrandLogo size="footer" />
           <p className="mt-3 max-w-sm text-sm text-muted-foreground">
             Shoes, slippers, sandals &amp; more — cleaned in 8–10 hours.
           </p>

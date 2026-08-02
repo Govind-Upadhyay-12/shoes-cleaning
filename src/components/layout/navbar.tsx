@@ -24,8 +24,8 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/70 bg-background/90 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-        <BrandLogo priority />
+      <div className="mx-auto flex h-[4.75rem] max-w-6xl items-center justify-between gap-4 px-4 sm:h-20 sm:px-6">
+        <BrandLogo priority size="nav" />
 
         <nav className="hidden items-center gap-8 text-sm text-muted-foreground md:flex">
           {links.map((link) => (
