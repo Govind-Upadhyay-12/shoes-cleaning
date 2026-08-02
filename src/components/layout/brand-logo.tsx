@@ -6,20 +6,14 @@ import { cn } from "@/lib/utils";
 type BrandLogoProps = {
   href?: string;
   className?: string;
-  /** Full wordmark logo vs icon mark only */
-  variant?: "full" | "mark";
-  /** Where the logo sits — controls default size */
+  /** Icon mark (header) vs slightly larger mark */
   size?: "nav" | "footer" | "lg";
   priority?: boolean;
+  /** Show brand name text next to the icon */
+  withName?: boolean;
 };
 
-const FULL_SIZES = {
-  nav: "h-12 w-auto max-w-[13rem] sm:h-14 sm:max-w-[16rem] md:h-[3.75rem] md:max-w-[18rem]",
-  footer: "h-14 w-auto max-w-[16rem] sm:h-16 sm:max-w-[18rem]",
-  lg: "h-16 w-auto sm:h-20",
-} as const;
-
-const MARK_SIZES = {
+const SIZES = {
   nav: "h-11 w-11 sm:h-12 sm:w-12",
   footer: "h-12 w-12",
   lg: "h-14 w-14",
@@ -28,32 +22,40 @@ const MARK_SIZES = {
 export function BrandLogo({
   href = "/",
   className,
-  variant = "full",
   size = "nav",
   priority = false,
+  withName = true,
 }: BrandLogoProps) {
-  const isFull = variant === "full";
-
   const image = (
-    <Image
-      src={
-        isFull
-          ? "/images/plugzzy-clean-logo.png"
-          : "/images/plugzzy-clean-mark.png"
-      }
-      alt={BRAND.name}
-      width={isFull ? 820 : 256}
-      height={isFull ? 346 : 256}
-      priority={priority}
-      className={cn(
-        "object-contain object-left",
-        isFull ? FULL_SIZES[size] : MARK_SIZES[size],
-        className
+    <span className={cn("inline-flex items-center gap-2.5", className)}>
+      <Image
+        src="/images/plugzzy-clean-mark.png"
+        alt=""
+        width={256}
+        height={256}
+        priority={priority}
+        className={cn("object-contain", SIZES[size])}
+      />
+      {withName && (
+        <span className="flex flex-col leading-none">
+          <span className="text-base font-bold tracking-tight text-[#0B1B3A] sm:text-lg">
+            Plugzzy
+          </span>
+          <span className="bg-gradient-to-r from-[#1D6FE8] to-[#0B4FCC] bg-clip-text text-sm font-bold tracking-tight text-transparent sm:text-[0.95rem]">
+            Clean
+          </span>
+        </span>
       )}
-    />
+    </span>
   );
 
-  if (!href) return image;
+  if (!href) {
+    return (
+      <span className="inline-flex items-center" aria-label={BRAND.name}>
+        {image}
+      </span>
+    );
+  }
 
   return (
     <Link
