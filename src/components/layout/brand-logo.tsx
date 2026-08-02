@@ -14,7 +14,7 @@ type BrandLogoProps = {
 };
 
 const FULL_SIZES = {
-  nav: "h-12 w-auto max-w-[min(100%,14rem)] sm:h-[3.5rem] sm:max-w-none md:h-16",
+  nav: "h-11 w-auto max-w-[11.5rem] sm:h-12 sm:max-w-[13.5rem] md:h-14 md:max-w-none",
   footer: "h-14 w-auto sm:h-16",
   lg: "h-16 w-auto sm:h-20",
 } as const;
