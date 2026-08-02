@@ -14,9 +14,13 @@ const geist = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "ShoeSwift — Cleaned in 8–10 Hours | AI Footwear Cleaning",
+  title: "Plugzzy Clean — Cleaned in 8–10 Hours | Footwear Cleaning",
   description:
-    "2–3× faster than typical shoe cleaning. AI detects dirt & delivery time. Shoes, slippers & sandals back in 8–10 hours — not 24–48.",
+    "2–3× faster than typical shoe cleaning. Instant dirt & delivery estimates. Shoes, slippers & sandals back in 8–10 hours — not 24–48.",
+  icons: {
+    icon: "/images/plugzzy-clean-mark.png",
+    apple: "/images/plugzzy-clean-mark.png",
+  },
 };
 
 export const viewport: Viewport = {

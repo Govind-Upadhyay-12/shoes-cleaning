@@ -33,7 +33,7 @@ export async function POST(request: Request) {
     const name =
       [clerkUser?.firstName, clerkUser?.lastName].filter(Boolean).join(" ") ||
       clerkUser?.fullName ||
-      "ShoeSwift User";
+      "Plugzzy Clean User";
 
     const body = await request.json();
     const { pickup, analysis, quote, assessmentId } = body;

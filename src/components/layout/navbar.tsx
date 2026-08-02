@@ -8,7 +8,8 @@ import {
   Show,
   UserButton,
 } from "@clerk/nextjs";
-import { Menu, X, Zap } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import { BrandLogo } from "@/components/layout/brand-logo";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -24,12 +25,7 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-border/70 bg-background/90 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-        <Link href="/" className="flex items-center gap-2 font-semibold tracking-tight">
-          <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm">
-            <Zap className="h-4 w-4" />
-          </span>
-          ShoeSwift
-        </Link>
+        <BrandLogo priority />
 
         <nav className="hidden items-center gap-8 text-sm text-muted-foreground md:flex">
           {links.map((link) => (

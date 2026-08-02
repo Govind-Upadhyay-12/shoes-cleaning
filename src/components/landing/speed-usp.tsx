@@ -22,7 +22,7 @@ export function SpeedUsp() {
             <p className="mt-3 max-w-xl text-sm leading-relaxed text-white/70 sm:text-base">
               Most services take{" "}
               <span className="font-semibold text-white/90">24–48 hours</span>.
-              ShoeSwift cleans and delivers in{" "}
+              Plugzzy Clean cleans and delivers in{" "}
               <span className="font-semibold text-blue-300">8–10 hours</span> —
               pick type &amp; dirt level, get price and delivery time instantly.
             </p>
@@ -39,7 +39,7 @@ export function SpeedUsp() {
               </div>
               <div className="rounded-2xl border border-primary/40 bg-primary/20 p-4">
                 <p className="text-xs uppercase tracking-wide text-blue-200">
-                  ShoeSwift
+                  Plugzzy Clean
                 </p>
                 <p className="mt-1 text-2xl font-semibold text-white">8–10h</p>
                 <p className="mt-1 text-xs text-blue-100">Same-day delivery</p>

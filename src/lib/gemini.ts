@@ -2,7 +2,7 @@ import { GoogleGenAI } from "@google/genai";
 import type { ShoeAnalysis } from "@/types";
 import { normalizeCleaningType } from "@/utils/pricing";
 
-export const ANALYSIS_PROMPT = `You are ShoeSwift's footwear cleaning assessment AI for India.
+export const ANALYSIS_PROMPT = `You are Plugzzy Clean's footwear cleaning assessment AI for India.
 Analyze ALL provided footwear images together (same pair from different angles).
 Accept ANY footwear: sneakers, sports shoes, formal shoes, boots, sandals, slippers, flip-flops, loafers, heels, traditional footwear (mojari/jutti), kids shoes, and more.
 

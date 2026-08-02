@@ -1,7 +1,8 @@
 import type { CleaningType, PickupSlot } from "@/types";
 
 export const BRAND = {
-  name: "ShoeSwift",
+  name: "Plugzzy Clean",
+  shortName: "Plugzzy",
   tagline: "India's Fastest Footwear Cleaning",
   usp: "Cleaned & delivered within 8–10 hours",
 } as const;

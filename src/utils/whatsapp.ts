@@ -21,7 +21,7 @@ export function buildWhatsAppUrl(payload: WhatsAppPayload): string {
     ? `\nNotes: ${payload.pickup.notes}`
     : "";
 
-  const message = `Hi ShoeSwift 👋
+  const message = `Hi Plugzzy Clean 👋
 I want to *book cleaning*.
 
 *Order ID:* ${payload.orderId}

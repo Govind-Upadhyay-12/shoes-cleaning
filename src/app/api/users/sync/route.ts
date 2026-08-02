@@ -32,7 +32,7 @@ export async function POST() {
       [clerkUser.firstName, clerkUser.lastName].filter(Boolean).join(" ") ||
       clerkUser.fullName ||
       email.split("@")[0] ||
-      "ShoeSwift User";
+      "Plugzzy Clean User";
 
     const phone =
       clerkUser.primaryPhoneNumber?.phoneNumber ||

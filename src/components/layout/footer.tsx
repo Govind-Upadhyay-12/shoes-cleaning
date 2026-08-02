@@ -1,11 +1,12 @@
 import Link from "next/link";
-import { Zap } from "lucide-react";
+import { BrandLogo } from "@/components/layout/brand-logo";
+import { BRAND } from "@/constants";
 
 const footerLinks = [
   { href: "/#features", label: "About" },
   { href: "/#faq", label: "Privacy" },
   { href: "/#faq", label: "Terms" },
-  { href: "mailto:hello@shoeswift.in", label: "Contact" },
+  { href: "mailto:hello@plugzzy.co.in", label: "Contact" },
 ];
 
 export function Footer() {
@@ -13,12 +14,7 @@ export function Footer() {
     <footer className="border-t border-border bg-white">
       <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-12 sm:px-6 md:flex-row md:items-center md:justify-between">
         <div>
-          <div className="flex items-center gap-2 font-semibold">
-            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-primary text-primary-foreground">
-              <Zap className="h-4 w-4" />
-            </span>
-            ShoeSwift
-          </div>
+          <BrandLogo />
           <p className="mt-3 max-w-sm text-sm text-muted-foreground">
             Shoes, slippers, sandals &amp; more — cleaned in 8–10 hours.
           </p>
@@ -42,7 +38,7 @@ export function Footer() {
         </div>
       </div>
       <div className="border-t border-border py-4 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} ShoeSwift. All rights reserved.
+        © {new Date().getFullYear()} {BRAND.name}. All rights reserved.
       </div>
     </footer>
   );

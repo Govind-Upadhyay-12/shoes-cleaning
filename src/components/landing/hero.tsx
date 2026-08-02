@@ -39,7 +39,7 @@ export function Hero() {
             <span className="font-semibold text-foreground/80 line-through decoration-destructive/60">
               24–48 hours
             </span>
-            ? ShoeSwift cleans shoes, slippers &amp; sandals and delivers in{" "}
+            ? Plugzzy Clean cleans shoes, slippers &amp; sandals and delivers in{" "}
             <span className="font-semibold text-primary">6–10 hours</span>. Tell
             us the type &amp; dirt — get price and delivery time instantly.
           </p>

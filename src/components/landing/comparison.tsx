@@ -32,7 +32,7 @@ export function Comparison() {
             Why wait 24–48 hours?
           </h2>
           <p className="mt-2 text-muted-foreground">
-            ShoeSwift is built for same-day cleaning — powered by AI estimates.
+            Plugzzy Clean is built for same-day cleaning — powered by instant estimates.
           </p>
         </div>
 
@@ -65,7 +65,7 @@ export function Comparison() {
 
           <div className="rounded-3xl border-2 border-primary/30 bg-accent/60 p-6 shadow-sm">
             <div className="flex items-center justify-between">
-              <h3 className="text-lg font-semibold text-primary">ShoeSwift</h3>
+              <h3 className="text-lg font-semibold text-primary">Plugzzy Clean</h3>
               <span className="rounded-full bg-primary px-2.5 py-1 text-xs font-semibold text-primary-foreground">
                 8–10h
               </span>
