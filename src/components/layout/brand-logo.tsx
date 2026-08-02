@@ -14,14 +14,14 @@ type BrandLogoProps = {
 };
 
 const FULL_SIZES = {
-  nav: "h-11 w-auto max-w-[11.5rem] sm:h-12 sm:max-w-[13.5rem] md:h-14 md:max-w-none",
-  footer: "h-14 w-auto sm:h-16",
+  nav: "h-12 w-auto max-w-[13rem] sm:h-14 sm:max-w-[16rem] md:h-[3.75rem] md:max-w-[18rem]",
+  footer: "h-14 w-auto max-w-[16rem] sm:h-16 sm:max-w-[18rem]",
   lg: "h-16 w-auto sm:h-20",
 } as const;
 
 const MARK_SIZES = {
-  nav: "h-10 w-10 sm:h-11 sm:w-11",
-  footer: "h-11 w-11",
+  nav: "h-11 w-11 sm:h-12 sm:w-12",
+  footer: "h-12 w-12",
   lg: "h-14 w-14",
 } as const;
 
@@ -42,8 +42,8 @@ export function BrandLogo({
           : "/images/plugzzy-clean-mark.png"
       }
       alt={BRAND.name}
-      width={isFull ? 560 : 160}
-      height={isFull ? 180 : 160}
+      width={isFull ? 820 : 256}
+      height={isFull ? 346 : 256}
       priority={priority}
       className={cn(
         "object-contain object-left",
