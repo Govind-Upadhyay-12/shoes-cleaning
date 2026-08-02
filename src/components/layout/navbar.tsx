@@ -5,8 +5,8 @@ import { useState } from "react";
 import {
   SignInButton,
   SignUpButton,
-  Show,
   UserButton,
+  useAuth,
 } from "@clerk/nextjs";
 import { Menu, X } from "lucide-react";
 import { BrandLogo } from "@/components/layout/brand-logo";
@@ -21,6 +21,8 @@ const links = [
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
+  const { isLoaded, isSignedIn } = useAuth();
+  const showSignIn = !isLoaded || !isSignedIn;
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/70 bg-background/90 backdrop-blur-xl">
@@ -40,33 +42,34 @@ export function Navbar() {
         </nav>
 
         <div className="flex shrink-0 items-center gap-2">
-          <Show when="signed-out">
-            <SignInButton mode="modal">
-              <button
-                type="button"
-                className={cn(
-                  buttonVariants({ variant: "outline" }),
-                  "rounded-full px-3 sm:px-4"
-                )}
-              >
-                Sign in
-              </button>
-            </SignInButton>
-            <SignUpButton mode="modal">
-              <button
-                type="button"
-                className={cn(
-                  buttonVariants({ variant: "ghost" }),
-                  "hidden rounded-full sm:inline-flex"
-                )}
-              >
-                Sign up
-              </button>
-            </SignUpButton>
-          </Show>
-          <Show when="signed-in">
+          {showSignIn ? (
+            <>
+              <SignInButton mode="modal">
+                <button
+                  type="button"
+                  className={cn(
+                    buttonVariants({ variant: "outline" }),
+                    "rounded-full px-3 sm:px-4"
+                  )}
+                >
+                  Sign in
+                </button>
+              </SignInButton>
+              <SignUpButton mode="modal">
+                <button
+                  type="button"
+                  className={cn(
+                    buttonVariants({ variant: "ghost" }),
+                    "hidden rounded-full sm:inline-flex"
+                  )}
+                >
+                  Sign up
+                </button>
+              </SignUpButton>
+            </>
+          ) : (
             <UserButton />
-          </Show>
+          )}
           <Link
             href="/upload"
             className={cn(
@@ -99,7 +102,7 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
-            <Show when="signed-out">
+            {showSignIn && (
               <div className="mt-1 flex gap-2 px-3 sm:hidden">
                 <SignUpButton mode="modal">
                   <button
@@ -114,7 +117,7 @@ export function Navbar() {
                   </button>
                 </SignUpButton>
               </div>
-            </Show>
+            )}
             <Link
               href="/upload"
               onClick={() => setOpen(false)}
