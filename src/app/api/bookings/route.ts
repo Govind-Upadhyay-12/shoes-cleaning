@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { connectDB } from "@/lib/mongodb";
 import { Booking } from "@/lib/models/Booking";
-import { User } from "@/lib/models/User";
 import { Assessment } from "@/lib/models/Assessment";
+import { upsertClerkUser } from "@/lib/upsert-user";
 import { buildWhatsAppUrl } from "@/utils/whatsapp";
 
 export const runtime = "nodejs";
@@ -54,18 +54,13 @@ export async function POST(request: Request) {
 
     await connectDB();
 
-    const dbUser = await User.findOneAndUpdate(
-      { clerkId: userId },
-      {
-        clerkId: userId,
-        name,
-        email,
-        image: clerkUser?.imageUrl,
-        provider: "clerk",
-        phone: pickup.phone,
-      },
-      { upsert: true, new: true, setDefaultsOnInsert: true }
-    );
+    const dbUser = await upsertClerkUser({
+      clerkId: userId,
+      name,
+      email,
+      image: clerkUser?.imageUrl,
+      phone: pickup.phone,
+    });
 
     const orderId = `SS${Date.now().toString().slice(-8)}`;
 

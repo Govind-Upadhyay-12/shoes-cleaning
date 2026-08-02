@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { connectDB } from "@/lib/mongodb";
-import { User } from "@/lib/models/User";
+import { upsertClerkUser } from "@/lib/upsert-user";
 
 export const runtime = "nodejs";
 
@@ -41,19 +41,14 @@ export async function POST() {
 
     await connectDB();
 
-    const user = await User.findOneAndUpdate(
-      { clerkId: userId },
-      {
-        clerkId: userId,
-        name,
-        email,
-        image: clerkUser.imageUrl,
-        provider: "clerk",
-        ...(phone ? { phone } : {}),
-        lastSignInAt: new Date(),
-      },
-      { upsert: true, new: true, setDefaultsOnInsert: true }
-    );
+    const user = await upsertClerkUser({
+      clerkId: userId,
+      name,
+      email,
+      image: clerkUser.imageUrl,
+      phone,
+      lastSignInAt: new Date(),
+    });
 
     return NextResponse.json({
       success: true,
