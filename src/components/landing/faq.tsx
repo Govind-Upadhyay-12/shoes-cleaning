@@ -7,31 +7,33 @@ import {
 
 const faqs = [
   {
-    q: "How long does it take?",
-    a: "Usually 6–10 hours. Basic clean can be faster.",
+    q: "How long does cleaning take?",
+    a: "6–10 hours for most pairs — not the usual 24–48 hours. Basic can be ready in about 6 hours.",
   },
   {
-    q: "What can I get cleaned?",
-    a: "Shoes, slippers, sandals, formals, boots, kids footwear — almost any pair.",
+    q: "What are your prices?",
+    a: "Basic ₹299 · Deep ₹399 · Premium/Leather ₹599. Pay after cleaning is done.",
   },
   {
-    q: "Do you pick up from home?",
-    a: "Yes. Doorstep pickup and delivery.",
+    q: "What do you clean?",
+    a: "Shoes, slippers, sandals, flip-flops, formals, boots, kids footwear — almost everything.",
   },
   {
-    q: "When do I pay?",
-    a: "After cleaning is done. No advance payment needed.",
+    q: "Do you pickup from home?",
+    a: "Yes. Doorstep pickup and delivery across our service areas.",
   },
 ];
 
 export function FAQ() {
   return (
-    <section id="faq" className="border-t border-border bg-white">
-      <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-20">
+    <section id="faq" className="scroll-mt-20 border-t border-border bg-white">
+      <div className="mx-auto max-w-3xl px-4 py-14 sm:px-6 sm:py-20">
         <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
           FAQ
         </h2>
-        <p className="mt-2 text-muted-foreground">Short answers.</p>
+        <p className="mt-2 text-muted-foreground">
+          Speed, price, and pickup — answered simply.
+        </p>
         <Accordion className="mt-8">
           {faqs.map((faq, index) => (
             <AccordionItem key={faq.q} value={`item-${index}`}>

@@ -14,6 +14,13 @@ import { BrandLogo } from "@/components/layout/brand-logo";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
+const links = [
+  { href: "/#speed", label: "Why faster" },
+  { href: "/#pricing", label: "Prices" },
+  { href: "/#how", label: "How it works" },
+  { href: "/#faq", label: "FAQ" },
+];
+
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const { isLoaded, isSignedIn } = useAuth();
@@ -21,18 +28,30 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-white/90 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:h-[4.25rem] sm:px-6">
         <BrandLogo priority size="nav" />
 
-        <div className="flex shrink-0 items-center gap-2">
+        <nav className="hidden items-center gap-7 text-sm text-muted-foreground lg:flex">
+          {links.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="transition hover:text-foreground"
+            >
+              {link.label}
+            </Link>
+          ))}
           {isSignedIn && (
             <Link
               href="/bookings"
-              className="hidden text-sm font-medium text-foreground hover:text-primary sm:inline"
+              className="font-medium text-foreground transition hover:text-primary"
             >
               My Bookings
             </Link>
           )}
+        </nav>
+
+        <div className="flex shrink-0 items-center gap-2">
           {showSignIn ? (
             <>
               <SignInButton mode="modal">
@@ -62,10 +81,10 @@ export function Navbar() {
             <UserButton />
           )}
           <AuthBookButton className="hidden rounded-full px-5 md:inline-flex">
-            Book
+            Book Cleaning
           </AuthBookButton>
           <button
-            className="rounded-lg p-2 md:hidden"
+            className="rounded-lg p-2 lg:hidden"
             onClick={() => setOpen((v) => !v)}
             aria-label="Toggle menu"
           >
@@ -75,8 +94,18 @@ export function Navbar() {
       </div>
 
       {open && (
-        <div className="border-t border-border bg-white px-4 py-4 md:hidden">
-          <div className="flex flex-col gap-2">
+        <div className="border-t border-border bg-white px-4 py-4 lg:hidden">
+          <div className="flex flex-col gap-1">
+            {links.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setOpen(false)}
+                className="rounded-xl px-3 py-3 text-sm text-muted-foreground"
+              >
+                {link.label}
+              </Link>
+            ))}
             {isSignedIn && (
               <Link
                 href="/bookings"
@@ -86,20 +115,6 @@ export function Navbar() {
                 My Bookings
               </Link>
             )}
-            <Link
-              href="/#how"
-              onClick={() => setOpen(false)}
-              className="rounded-xl px-3 py-3 text-sm text-muted-foreground"
-            >
-              How it works
-            </Link>
-            <Link
-              href="/#faq"
-              onClick={() => setOpen(false)}
-              className="rounded-xl px-3 py-3 text-sm text-muted-foreground"
-            >
-              FAQ
-            </Link>
             <AuthBookButton
               onNavigate={() => setOpen(false)}
               className="mt-2 h-12 rounded-full"
