@@ -17,9 +17,14 @@ export const metadata: Metadata = {
   title: "Plugzzy Clean — Cleaned in 8–10 Hours | Footwear Cleaning",
   description:
     "2–3× faster than typical shoe cleaning. Instant dirt & delivery estimates. Shoes, slippers & sandals back in 8–10 hours — not 24–48.",
+  applicationName: "Plugzzy Clean",
   icons: {
-    icon: "/images/plugzzy-clean-mark.png",
-    apple: "/images/plugzzy-clean-mark.png",
+    icon: [
+      { url: "/icon.png", type: "image/png", sizes: "192x192" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
+    shortcut: "/favicon.ico",
   },
 };
 
