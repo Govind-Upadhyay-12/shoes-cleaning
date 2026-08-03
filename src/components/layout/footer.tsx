@@ -11,8 +11,8 @@ export function Footer() {
             <BrandLogo size="footer" />
           </div>
           <p className="mt-4 max-w-sm text-sm text-white/70">
-            Fast footwear cleaning from ₹299. Delivered in 6–10 hours — not
-            24–48.
+            Fast footwear cleaning in Bengaluru from ₹299. Delivered in 6–10
+            hours — not 24–48. Currently live in Bengaluru only.
           </p>
         </div>
         <div className="flex flex-wrap gap-5 text-sm text-white/70">

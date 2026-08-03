@@ -42,8 +42,8 @@ export function OfferBanner() {
             </h2>
 
             <p className="mt-4 max-w-md text-base leading-relaxed text-white/75 sm:text-lg">
-              New customers only. Same fast 6–10 hour delivery. Pay after
-              cleaning — savings applied on your first order.
+              Live in Bengaluru only. New customers get 50% off first clean —
+              same 6–10 hour delivery. Pay after cleaning.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-2">

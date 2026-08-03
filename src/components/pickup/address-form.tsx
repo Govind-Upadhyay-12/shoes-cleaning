@@ -4,6 +4,11 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PICKUP_SLOTS } from "@/constants";
+import {
+  bengaluruPincodeError,
+  isBengaluruPincode,
+  SERVICE_CITY,
+} from "@/lib/bengaluru";
 import type { PickupDetails } from "@/types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,8 +21,11 @@ const schema = z.object({
   phone: z
     .string()
     .regex(/^[6-9]\d{9}$/, "Enter a valid 10-digit Indian mobile number"),
-  address: z.string().min(8, "Enter a complete address"),
-  pincode: z.string().regex(/^\d{6}$/, "Enter a valid 6-digit pincode"),
+  address: z.string().min(8, "Enter a complete Bengaluru address"),
+  pincode: z
+    .string()
+    .regex(/^\d{6}$/, "Enter a valid 6-digit pincode")
+    .refine(isBengaluruPincode, bengaluruPincodeError()),
   preferredPickupTime: z.enum(["Morning", "Afternoon", "Evening"]),
   notes: z.string().optional(),
 });
@@ -46,6 +54,11 @@ export function AddressForm({ onSubmit, loading }: Props) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+      <div className="rounded-2xl border border-primary/20 bg-accent/60 px-4 py-3 text-sm text-foreground">
+        <span className="font-semibold">{SERVICE_CITY.message}.</span>{" "}
+        Enter a {SERVICE_CITY.name} address with pincode {SERVICE_CITY.pincodePrefix}xxx.
+      </div>
+
       <div className="space-y-2">
         <Label htmlFor="fullName">Full Name</Label>
         <Input id="fullName" placeholder="Aarav Mehta" {...register("fullName")} />
@@ -63,10 +76,10 @@ export function AddressForm({ onSubmit, loading }: Props) {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="address">Address</Label>
+        <Label htmlFor="address">Address in {SERVICE_CITY.name}</Label>
         <Textarea
           id="address"
-          placeholder="House / flat, street, landmark"
+          placeholder="House / flat, street, landmark, Bengaluru"
           rows={3}
           {...register("address")}
         />
@@ -76,8 +89,13 @@ export function AddressForm({ onSubmit, loading }: Props) {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="pincode">Pincode</Label>
-        <Input id="pincode" placeholder="560001" inputMode="numeric" {...register("pincode")} />
+        <Label htmlFor="pincode">Pincode (Bengaluru 560xxx)</Label>
+        <Input
+          id="pincode"
+          placeholder={SERVICE_CITY.pincodeHint}
+          inputMode="numeric"
+          {...register("pincode")}
+        />
         {errors.pincode && (
           <p className="text-sm text-destructive">{errors.pincode.message}</p>
         )}

@@ -2,6 +2,8 @@ import mongoose from "mongoose";
 import { User } from "@/lib/models/User";
 import { Booking } from "@/lib/models/Booking";
 import { Assessment } from "@/lib/models/Assessment";
+import { Visit } from "@/lib/models/Visit";
+import { Visitor } from "@/lib/models/Visitor";
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
@@ -30,11 +32,12 @@ global.mongooseCache = cached;
 
 async function syncSchemas() {
   if (cached.indexesSynced) return;
-  // Ensure collections + indexes exist in MongoDB
   await Promise.all([
     User.syncIndexes(),
     Booking.syncIndexes(),
     Assessment.syncIndexes(),
+    Visit.syncIndexes(),
+    Visitor.syncIndexes(),
   ]);
   cached.indexesSynced = true;
 }

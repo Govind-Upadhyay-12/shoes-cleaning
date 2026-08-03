@@ -24,7 +24,11 @@ const faqs = [
   },
   {
     q: "Do you pickup from home?",
-    a: "Yes. Doorstep pickup and delivery across our service areas.",
+    a: "Yes — doorstep pickup and delivery across Bengaluru (pincode 560xxx). We are live in Bengaluru only for now.",
+  },
+  {
+    q: "Which cities do you serve?",
+    a: "Plugzzy Clean is currently live in Bengaluru only. Enter a 560xxx pincode to book.",
   },
 ];
 

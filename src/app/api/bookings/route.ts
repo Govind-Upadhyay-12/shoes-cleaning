@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { NEW_USER_COUPON } from "@/constants";
+import { bengaluruPincodeError, isBengaluruPincode } from "@/lib/bengaluru";
 import { connectDB } from "@/lib/mongodb";
 import { Booking } from "@/lib/models/Booking";
 import { Assessment } from "@/lib/models/Assessment";
@@ -44,6 +45,13 @@ export async function POST(request: Request) {
     if (!pickup?.fullName || !pickup?.phone || !pickup?.address || !pickup?.pincode) {
       return NextResponse.json(
         { error: "Incomplete pickup details" },
+        { status: 400 }
+      );
+    }
+
+    if (!isBengaluruPincode(String(pickup.pincode))) {
+      return NextResponse.json(
+        { error: bengaluruPincodeError() },
         { status: 400 }
       );
     }

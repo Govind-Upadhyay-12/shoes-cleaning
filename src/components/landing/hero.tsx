@@ -34,8 +34,8 @@ export function Hero() {
             <span className="mt-1 block text-blue-300">Back in 6–10.</span>
           </h1>
           <p className="mt-4 max-w-lg text-base leading-relaxed text-white/80 sm:text-lg">
-            First cleaning up to 50% off. Same-day return in 6–10 hours. Pay
-            after cleaning.
+            Live in Bengaluru only. First cleaning up to 50% off. Back in 6–10
+            hours. Pay after cleaning.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
             <AuthBookButton className="h-12 rounded-full px-7 text-base shadow-lg shadow-black/20">
@@ -43,7 +43,7 @@ export function Hero() {
               <ArrowRight className="ml-1 h-4 w-4" />
             </AuthBookButton>
             <p className="text-sm text-white/65 sm:pl-2">
-              From ₹149 on first clean
+              Bengaluru · from ₹149 first clean
             </p>
           </div>
         </motion.div>

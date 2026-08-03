@@ -14,9 +14,9 @@ const geist = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "Plugzzy Clean — Cleaned in 8–10 Hours | Footwear Cleaning",
+  title: "Plugzzy Clean — Bengaluru Footwear Cleaning in 6–10 Hours",
   description:
-    "2–3× faster than typical shoe cleaning. Instant dirt & delivery estimates. Shoes, slippers & sandals back in 8–10 hours — not 24–48.",
+    "Live in Bengaluru only. 2–3× faster than typical shoe cleaning. Instant estimates. Shoes, slippers & sandals back in 6–10 hours — not 24–48.",
   applicationName: "Plugzzy Clean",
   icons: {
     icon: [
