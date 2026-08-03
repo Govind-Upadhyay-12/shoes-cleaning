@@ -20,6 +20,11 @@ export type PricingQuote = {
   deliveryLabel: string;
   includes: string[];
   requiresManualReview: boolean;
+  /** List price before any coupon */
+  originalPrice?: number | null;
+  discountPercent?: number;
+  couponCode?: string | null;
+  couponApplied?: boolean;
 };
 
 export type PickupSlot = "Morning" | "Afternoon" | "Evening";

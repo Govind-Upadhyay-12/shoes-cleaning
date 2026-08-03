@@ -4,10 +4,22 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth, SignInButton } from "@clerk/nextjs";
 import { AddressForm } from "@/components/pickup/address-form";
-import { PICKUP_SLOTS } from "@/constants";
+import { NEW_USER_COUPON, PICKUP_SLOTS } from "@/constants";
 import type { OrderRecord, PickupDetails, ShoeAnalysis } from "@/types";
-import { buildQuote, displayShoeTitle, formatINR } from "@/utils/pricing";
-import { loadAnalysis, loadAssessmentId, loadPreview, saveOrder } from "@/utils/storage";
+import {
+  applyNewUserCoupon,
+  buildQuote,
+  displayShoeTitle,
+  formatINR,
+} from "@/utils/pricing";
+import {
+  loadAnalysis,
+  loadAssessmentId,
+  loadCouponApplied,
+  loadPreview,
+  saveCouponApplied,
+  saveOrder,
+} from "@/utils/storage";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -16,6 +28,8 @@ export function PickupPageClient() {
   const { isLoaded, isSignedIn } = useAuth();
   const [analysis, setAnalysis] = useState<ShoeAnalysis | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
+  const [couponApplied, setCouponApplied] = useState(false);
+  const [eligible, setEligible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -27,12 +41,44 @@ export function PickupPageClient() {
     }
     setAnalysis(data);
     setPreview(loadPreview());
+    setCouponApplied(loadCouponApplied());
   }, [router]);
 
-  const quote = useMemo(
-    () => (analysis ? buildQuote(analysis) : null),
-    [analysis]
-  );
+  useEffect(() => {
+    if (!isSignedIn) return;
+    let cancelled = false;
+
+    async function checkEligibility() {
+      try {
+        const response = await fetch("/api/coupon/eligibility");
+        const data = await response.json();
+        if (cancelled) return;
+        if (response.ok && data.eligible) {
+          setEligible(true);
+        } else {
+          setEligible(false);
+          if (loadCouponApplied()) {
+            saveCouponApplied(false);
+            setCouponApplied(false);
+          }
+        }
+      } catch {
+        if (!cancelled) setEligible(false);
+      }
+    }
+
+    checkEligibility();
+    return () => {
+      cancelled = true;
+    };
+  }, [isSignedIn]);
+
+  const quote = useMemo(() => {
+    if (!analysis) return null;
+    const base = buildQuote(analysis);
+    if (couponApplied && eligible) return applyNewUserCoupon(base);
+    return base;
+  }, [analysis, couponApplied, eligible]);
 
   async function onSubmit(pickup: PickupDetails) {
     if (!analysis || !quote) return;
@@ -45,13 +91,15 @@ export function PickupPageClient() {
     setError(null);
 
     try {
+      const applyCoupon = couponApplied && eligible;
       const response = await fetch("/api/bookings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           pickup,
           analysis,
-          quote,
+          applyCoupon,
+          couponCode: applyCoupon ? NEW_USER_COUPON.code : undefined,
           assessmentId: analysis.assessmentId || loadAssessmentId(),
         }),
       });
@@ -65,10 +113,12 @@ export function PickupPageClient() {
         (s) => s.value === pickup.preferredPickupTime
       );
 
+      const finalQuote = data.booking?.quote ?? quote;
+
       const order: OrderRecord = {
         id: data.orderId,
         analysis,
-        quote,
+        quote: finalQuote,
         pickup,
         previewImage: preview || undefined,
         createdAt: new Date().toISOString(),
@@ -77,6 +127,7 @@ export function PickupPageClient() {
       };
 
       saveOrder(order);
+      saveCouponApplied(false);
       sessionStorage.setItem(
         "shoeswift_pickup_window",
         slot?.window || pickup.preferredPickupTime
@@ -127,9 +178,20 @@ export function PickupPageClient() {
     <div className="mx-auto max-w-xl px-4 py-10 sm:px-6">
       <h1 className="text-3xl font-semibold tracking-tight">Pickup details</h1>
       <p className="mt-2 text-sm text-muted-foreground">
-        {displayShoeTitle(analysis)} · {formatINR(quote.price)} ·{" "}
-        {quote.deliveryLabel}. Pay after cleaning.
+        {displayShoeTitle(analysis)} · {formatINR(quote.price)}
+        {quote.couponApplied && quote.originalPrice != null ? (
+          <span className="ml-1 line-through opacity-60">
+            {formatINR(quote.originalPrice)}
+          </span>
+        ) : null}{" "}
+        · {quote.deliveryLabel}. Pay after cleaning.
       </p>
+      {quote.couponApplied && (
+        <p className="mt-1 text-sm font-medium text-primary">
+          {NEW_USER_COUPON.code} · {NEW_USER_COUPON.percent}% new-user discount
+          applied
+        </p>
+      )}
 
       {error && (
         <p className="mt-4 text-sm text-destructive">{error}</p>

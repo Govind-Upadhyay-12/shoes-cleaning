@@ -34,16 +34,16 @@ export function Hero() {
             <span className="mt-1 block text-blue-300">Back in 6–10.</span>
           </h1>
           <p className="mt-4 max-w-lg text-base leading-relaxed text-white/80 sm:text-lg">
-            Affordable doorstep footwear cleaning — from ₹299. Same-day return.
-            Pay after cleaning.
+            First cleaning up to 50% off. Same-day return in 6–10 hours. Pay
+            after cleaning.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
             <AuthBookButton className="h-12 rounded-full px-7 text-base shadow-lg shadow-black/20">
-              Book Cleaning
+              Book · up to 50% off
               <ArrowRight className="ml-1 h-4 w-4" />
             </AuthBookButton>
             <p className="text-sm text-white/65 sm:pl-2">
-              Shoes · slippers · sandals
+              From ₹149 on first clean
             </p>
           </div>
         </motion.div>

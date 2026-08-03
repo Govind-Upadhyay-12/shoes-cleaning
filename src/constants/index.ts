@@ -113,4 +113,12 @@ export const STORAGE_KEYS = {
   preview: "shoeswift_preview",
   order: "shoeswift_order",
   assessmentId: "shoeswift_assessment_id",
+  couponApplied: "shoeswift_coupon_applied",
+} as const;
+
+/** First booking only — 50% off */
+export const NEW_USER_COUPON = {
+  code: "NEW50",
+  percent: 50,
+  label: "New user · 50% off",
 } as const;

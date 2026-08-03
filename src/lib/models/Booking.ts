@@ -39,10 +39,14 @@ const AnalysisSchema = new Schema(
 const QuoteSchema = new Schema(
   {
     price: { type: Number, default: null },
+    originalPrice: { type: Number, default: null },
     etaHours: { type: Number, default: null },
     deliveryLabel: { type: String, required: true },
     includes: { type: [String], default: [] },
     requiresManualReview: { type: Boolean, default: false },
+    discountPercent: { type: Number, default: 0 },
+    couponCode: { type: String, default: null },
+    couponApplied: { type: Boolean, default: false },
   },
   { _id: false }
 );

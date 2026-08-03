@@ -7,12 +7,16 @@ import {
 
 const faqs = [
   {
+    q: "Is there a first cleaning offer?",
+    a: "Yes — first cleaning is up to 50% off (Basic from ₹149, Deep from ₹199, Premium from ₹299). Same 6–10 hour delivery.",
+  },
+  {
     q: "How long does cleaning take?",
     a: "6–10 hours for most pairs — not the usual 24–48 hours. Basic can be ready in about 6 hours.",
   },
   {
     q: "What are your prices?",
-    a: "Basic ₹299 · Deep ₹399 · Premium/Leather ₹599. Pay after cleaning is done.",
+    a: "Regular: Basic ₹299 · Deep ₹399 · Premium ₹599. First clean: up to 50% off. Pay after cleaning is done.",
   },
   {
     q: "What do you clean?",

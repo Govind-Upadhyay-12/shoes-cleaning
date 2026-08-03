@@ -53,8 +53,20 @@ export function loadOrder(id?: string): OrderRecord | null {
   }
 }
 
+export function saveCouponApplied(applied: boolean) {
+  sessionStorage.setItem(
+    STORAGE_KEYS.couponApplied,
+    applied ? "1" : "0"
+  );
+}
+
+export function loadCouponApplied(): boolean {
+  return sessionStorage.getItem(STORAGE_KEYS.couponApplied) === "1";
+}
+
 export function clearAnalysis() {
   sessionStorage.removeItem(STORAGE_KEYS.analysis);
   sessionStorage.removeItem(STORAGE_KEYS.preview);
   sessionStorage.removeItem(STORAGE_KEYS.assessmentId);
+  sessionStorage.removeItem(STORAGE_KEYS.couponApplied);
 }

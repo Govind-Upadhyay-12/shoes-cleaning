@@ -138,11 +138,23 @@ export function BookingsPageClient() {
                   </p>
                   <p className="mt-1 text-sm font-medium">
                     {formatINR(booking.quote.price)}
+                    {booking.quote.couponApplied &&
+                    booking.quote.originalPrice != null ? (
+                      <span className="ml-1.5 font-normal text-muted-foreground line-through">
+                        {formatINR(booking.quote.originalPrice)}
+                      </span>
+                    ) : null}
                     <span className="font-normal text-muted-foreground">
                       {" "}
                       · {formatPaymentLabel(booking.paymentStatus)}
                     </span>
                   </p>
+                  {booking.quote.couponApplied && booking.quote.couponCode ? (
+                    <p className="mt-0.5 text-xs font-medium text-primary">
+                      {booking.quote.couponCode} · {booking.quote.discountPercent}
+                      % off
+                    </p>
+                  ) : null}
                 </div>
                 <Link
                   href={`/track/${booking.orderId}`}

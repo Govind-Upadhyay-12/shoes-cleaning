@@ -15,6 +15,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const links = [
+  { href: "/#offer", label: "Offer" },
   { href: "/#speed", label: "Why faster" },
   { href: "/#pricing", label: "Prices" },
   { href: "/#how", label: "How it works" },

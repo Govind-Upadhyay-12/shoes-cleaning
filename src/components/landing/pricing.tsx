@@ -10,12 +10,14 @@ const tiers = [
   {
     name: "Basic",
     price: "₹299",
+    offer: "₹149",
     time: "6 hours",
     text: "Dust, light stains, odor refresh",
   },
   {
     name: "Deep",
     price: "₹399",
+    offer: "₹199",
     time: "8 hours",
     text: "Mud, stains, sole scrub",
     featured: true,
@@ -23,6 +25,7 @@ const tiers = [
   {
     name: "Premium",
     price: "₹599",
+    offer: "₹299",
     time: "10 hours",
     text: "Leather & delicate care",
   },
@@ -39,14 +42,14 @@ export function Pricing() {
             viewport={{ once: true }}
           >
             <p className="text-sm font-semibold tracking-[0.18em] text-primary uppercase">
-              Low prices
+              First clean prices
             </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
-              Fast cleaning that stays affordable
+              Up to 50% off your first cleaning
             </h2>
             <p className="mt-3 max-w-md text-muted-foreground">
-              Clear pricing. No surprise fees. Pay only after your pair is
-              cleaned.
+              Same fast delivery. Lower first-order price. Pay after cleaning is
+              done.
             </p>
 
             <div className="mt-8 space-y-3">
@@ -70,15 +73,20 @@ export function Pricing() {
                       {tier.text}
                     </p>
                   </div>
-                  <p className="shrink-0 text-2xl font-semibold text-primary">
-                    {tier.price}
-                  </p>
+                  <div className="shrink-0 text-right">
+                    <p className="text-2xl font-semibold text-primary">
+                      {tier.offer}
+                    </p>
+                    <p className="text-xs text-muted-foreground line-through">
+                      {tier.price}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
 
             <AuthBookButton className="mt-8 h-12 rounded-full px-6">
-              Get your price
+              Claim first-clean offer
               <ArrowRight className="ml-1 h-4 w-4" />
             </AuthBookButton>
           </motion.div>
@@ -96,6 +104,9 @@ export function Pricing() {
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 48vw"
             />
+            <div className="absolute left-4 top-4 rounded-full bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground shadow-lg">
+              Up to 50% OFF
+            </div>
           </motion.div>
         </div>
       </div>

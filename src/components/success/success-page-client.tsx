@@ -8,6 +8,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { loadOrder } from "@/utils/storage";
 import type { OrderRecord } from "@/types";
 import { PICKUP_SLOTS } from "@/constants";
+import { formatINR } from "@/utils/pricing";
 import { cn } from "@/lib/utils";
 
 export function SuccessPageClient() {
@@ -44,7 +45,13 @@ export function SuccessPageClient() {
         cleaning.
       </p>
       {order && (
-        <p className="mt-3 text-sm text-muted-foreground">Order {order.id}</p>
+        <p className="mt-3 text-sm text-muted-foreground">
+          Order {order.id}
+          {order.quote.price != null ? ` · ${formatINR(order.quote.price)}` : ""}
+          {order.quote.couponApplied
+            ? ` (${order.quote.couponCode || "NEW50"} applied)`
+            : ""}
+        </p>
       )}
 
       <div className="mt-8 flex w-full flex-col gap-2">

@@ -1,9 +1,12 @@
 import { NextResponse } from "next/server";
 import { auth, currentUser } from "@clerk/nextjs/server";
+import { NEW_USER_COUPON } from "@/constants";
 import { connectDB } from "@/lib/mongodb";
 import { Booking } from "@/lib/models/Booking";
 import { Assessment } from "@/lib/models/Assessment";
+import { isFirstBookingUser } from "@/lib/first-booking";
 import { upsertClerkUser } from "@/lib/upsert-user";
+import { applyNewUserCoupon, buildQuote } from "@/utils/pricing";
 import { buildWhatsAppUrl } from "@/utils/whatsapp";
 
 export const runtime = "nodejs";
@@ -36,7 +39,7 @@ export async function POST(request: Request) {
       "Plugzzy Clean User";
 
     const body = await request.json();
-    const { pickup, analysis, quote, assessmentId } = body;
+    const { pickup, analysis, assessmentId, applyCoupon, couponCode } = body;
 
     if (!pickup?.fullName || !pickup?.phone || !pickup?.address || !pickup?.pincode) {
       return NextResponse.json(
@@ -45,9 +48,9 @@ export async function POST(request: Request) {
       );
     }
 
-    if (!analysis || !quote) {
+    if (!analysis?.estimated_cleaning_type || !analysis?.recommended_service) {
       return NextResponse.json(
-        { error: "Missing analysis or quote" },
+        { error: "Missing analysis" },
         { status: 400 }
       );
     }
@@ -61,6 +64,27 @@ export async function POST(request: Request) {
       image: clerkUser?.imageUrl,
       phone: pickup.phone,
     });
+
+    let quote = buildQuote(analysis);
+    const wantsCoupon =
+      applyCoupon === true ||
+      couponCode === NEW_USER_COUPON.code ||
+      body?.quote?.couponApplied === true ||
+      body?.quote?.couponCode === NEW_USER_COUPON.code;
+
+    if (wantsCoupon) {
+      const eligible = await isFirstBookingUser(userId);
+      if (!eligible) {
+        return NextResponse.json(
+          {
+            error:
+              "New-user coupon is only valid on your first booking.",
+          },
+          { status: 400 }
+        );
+      }
+      quote = applyNewUserCoupon(quote);
+    }
 
     const orderId = `SS${Date.now().toString().slice(-8)}`;
 

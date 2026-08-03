@@ -1,4 +1,4 @@
-import { PRICING } from "@/constants";
+import { NEW_USER_COUPON, PRICING } from "@/constants";
 import type { CleaningType, PricingQuote, ShoeAnalysis } from "@/types";
 
 export function normalizeCleaningType(value: string): CleaningType {
@@ -32,10 +32,46 @@ export function buildQuote(analysis: ShoeAnalysis): PricingQuote {
 
   return {
     price: config.price,
+    originalPrice: config.price,
     etaHours: config.etaHours,
     deliveryLabel: getDeliveryLabel(config.etaHours),
     includes: config.includes,
     requiresManualReview: config.requiresManualReview,
+    couponApplied: false,
+    couponCode: null,
+    discountPercent: 0,
+  };
+}
+
+/** Apply first-booking NEW50 (50% off). No-op if price is null. */
+export function applyNewUserCoupon(quote: PricingQuote): PricingQuote {
+  if (quote.price === null) return quote;
+  if (quote.couponApplied && quote.couponCode === NEW_USER_COUPON.code) {
+    return quote;
+  }
+
+  const base = quote.originalPrice ?? quote.price;
+  const discounted = Math.round(base * (1 - NEW_USER_COUPON.percent / 100));
+
+  return {
+    ...quote,
+    originalPrice: base,
+    price: discounted,
+    discountPercent: NEW_USER_COUPON.percent,
+    couponCode: NEW_USER_COUPON.code,
+    couponApplied: true,
+  };
+}
+
+export function stripCoupon(quote: PricingQuote): PricingQuote {
+  const base = quote.originalPrice ?? quote.price;
+  return {
+    ...quote,
+    price: base,
+    originalPrice: base,
+    discountPercent: 0,
+    couponCode: null,
+    couponApplied: false,
   };
 }
 
