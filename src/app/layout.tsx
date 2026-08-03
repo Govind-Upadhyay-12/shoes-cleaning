@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Analytics } from "@vercel/analytics/next";
 import { Providers } from "@/app/providers";
 import { Footer } from "@/components/layout/footer";
 import { MobileStickyCta } from "@/components/layout/mobile-sticky-cta";
@@ -52,6 +53,7 @@ export default function RootLayout({
             </div>
           </Providers>
         </ClerkProvider>
+        <Analytics />
       </body>
     </html>
   );
