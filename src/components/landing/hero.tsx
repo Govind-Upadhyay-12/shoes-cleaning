@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight, Bot, Clock3, Zap } from "lucide-react";
+import { AuthBookButton } from "@/components/auth/auth-book-button";
 import { buttonVariants } from "@/components/ui/button";
 import { FOOTWEAR_SHOWCASE, IMAGES } from "@/constants/images";
 import { cn } from "@/lib/utils";
@@ -63,16 +64,12 @@ export function Hero() {
           </div>
 
           <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-            <Link
-              href="/upload"
-              className={cn(
-                buttonVariants({ size: "lg" }),
-                "h-12 rounded-full px-6 text-base"
-              )}
+            <AuthBookButton
+              className="h-12 rounded-full px-6 text-base"
             >
               Get Instant Estimate
               <ArrowRight className="ml-1 h-4 w-4" />
-            </Link>
+            </AuthBookButton>
             <Link
               href="/#speed"
               className={cn(

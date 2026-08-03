@@ -9,6 +9,7 @@ import {
   useAuth,
 } from "@clerk/nextjs";
 import { Menu, X } from "lucide-react";
+import { AuthBookButton } from "@/components/auth/auth-book-button";
 import { BrandLogo } from "@/components/layout/brand-logo";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -70,15 +71,11 @@ export function Navbar() {
           ) : (
             <UserButton />
           )}
-          <Link
-            href="/upload"
-            className={cn(
-              buttonVariants(),
-              "hidden rounded-full px-5 md:inline-flex"
-            )}
+          <AuthBookButton
+            className="hidden rounded-full px-5 md:inline-flex"
           >
             Book Cleaning
-          </Link>
+          </AuthBookButton>
           <button
             className="rounded-lg p-2 lg:hidden"
             onClick={() => setOpen((v) => !v)}
@@ -118,13 +115,12 @@ export function Navbar() {
                 </SignUpButton>
               </div>
             )}
-            <Link
-              href="/upload"
-              onClick={() => setOpen(false)}
-              className={cn(buttonVariants(), "mt-2 h-12 rounded-full md:hidden")}
+            <AuthBookButton
+              onNavigate={() => setOpen(false)}
+              className="mt-2 h-12 rounded-full md:hidden"
             >
               Book Cleaning
-            </Link>
+            </AuthBookButton>
           </div>
         </div>
       )}

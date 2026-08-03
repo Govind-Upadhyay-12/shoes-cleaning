@@ -1,10 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { motion } from "framer-motion";
 import { ClipboardList, Clock3, Timer, Zap } from "lucide-react";
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { AuthBookButton } from "@/components/auth/auth-book-button";
 
 export function SpeedUsp() {
   return (
@@ -90,15 +88,9 @@ export function SpeedUsp() {
                 </motion.li>
               ))}
             </ul>
-            <Link
-              href="/upload"
-              className={cn(
-                buttonVariants({ size: "lg" }),
-                "mt-6 h-11 w-full rounded-full text-sm"
-              )}
-            >
+            <AuthBookButton className="mt-6 h-11 w-full rounded-full text-sm">
               Get Instant Estimate
-            </Link>
+            </AuthBookButton>
           </div>
         </div>
       </div>
