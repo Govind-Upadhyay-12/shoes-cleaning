@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { UploadZone } from "@/components/upload/upload-zone";
@@ -46,7 +45,7 @@ export function UploadPageClient() {
       return;
     }
     if (!detailsReady) {
-      setError("Select footwear type, material, color, dirt level, and stains.");
+      setError("Fill all footwear details below.");
       return;
     }
 
@@ -67,56 +66,30 @@ export function UploadPageClient() {
 
   return (
     <div className="mx-auto max-w-xl px-4 py-8 sm:px-6 sm:py-10">
-      <div className="mb-6">
-        <p className="text-sm font-medium text-primary">Step 1 of 3</p>
-        <h1 className="mt-2 text-3xl font-semibold tracking-tight">
-          Tell us about your pair
-        </h1>
-        <p className="mt-2 text-muted-foreground">
-          Upload photos + select type &amp; dirt — we calculate time &amp; price
-          with fixed rules (no AI).
-        </p>
+      <h1 className="text-3xl font-semibold tracking-tight">Book cleaning</h1>
+      <p className="mt-2 text-muted-foreground">
+        Add 3 photos and a few details. Get price + delivery time instantly.
+      </p>
+
+      <div className="mt-8">
+        <UploadZone images={images} onChange={setImages} error={null} />
       </div>
 
-      <div className="mb-5 flex gap-2 overflow-x-auto pb-1 sm:flex-wrap">
-        {[
-          { label: "Before/After", image: "/images/before-after.png" },
-          { label: "Deep clean", image: "/images/cleaning-process.png" },
-          { label: "Slippers", image: "/images/slippers-cleaning.png" },
-          { label: "Sandals", image: "/images/sandals-cleaning.png" },
-        ].map((item) => (
-          <div
-            key={item.label}
-            className="relative h-14 w-14 shrink-0 overflow-hidden rounded-2xl"
-          >
-            <Image
-              src={item.image}
-              alt={item.label}
-              fill
-              className="object-cover"
-              sizes="56px"
-            />
-          </div>
-        ))}
-      </div>
-
-      <UploadZone images={images} onChange={setImages} error={null} />
-
-      <div className="mt-5">
-        <h2 className="mb-3 text-sm font-semibold">Footwear details</h2>
+      <div className="mt-8">
+        <h2 className="mb-3 text-base font-semibold">Details</h2>
         <FootwearDetailsForm value={details} onChange={setDetails} />
       </div>
 
       {error && <p className="mt-4 text-sm text-destructive">{error}</p>}
 
-      <div className="sticky bottom-4 mt-8 space-y-3">
+      <div className="sticky bottom-4 mt-8 space-y-2">
         <Button
           size="lg"
-          className="h-12 w-full rounded-full text-base sm:h-14"
+          className="h-12 w-full rounded-full text-base"
           disabled={!ready}
           onClick={onGetEstimate}
         >
-          Get Instant Estimate
+          Get price &amp; time
         </Button>
         <Link
           href="/"
@@ -125,7 +98,7 @@ export function UploadPageClient() {
             "flex h-11 w-full items-center justify-center rounded-full"
           )}
         >
-          Back to home
+          Cancel
         </Link>
       </div>
     </div>

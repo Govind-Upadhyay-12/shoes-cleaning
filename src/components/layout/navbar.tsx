@@ -14,43 +14,25 @@ import { BrandLogo } from "@/components/layout/brand-logo";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-const links = [
-  { href: "/#speed", label: "Why faster" },
-  { href: "/#features", label: "Why us" },
-  { href: "/#faq", label: "FAQ" },
-];
-
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const { isLoaded, isSignedIn } = useAuth();
   const showSignIn = !isLoaded || !isSignedIn;
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border/70 bg-background/90 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:h-[4.5rem] sm:gap-4 sm:px-6">
+    <header className="sticky top-0 z-50 border-b border-border/60 bg-white/90 backdrop-blur-xl">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
         <BrandLogo priority size="nav" />
 
-        <nav className="hidden items-center gap-8 text-sm text-muted-foreground lg:flex">
-          {links.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="transition hover:text-foreground"
-            >
-              {link.label}
-            </Link>
-          ))}
+        <div className="flex shrink-0 items-center gap-2">
           {isSignedIn && (
             <Link
               href="/bookings"
-              className="font-medium text-foreground transition hover:text-primary"
+              className="hidden text-sm font-medium text-foreground hover:text-primary sm:inline"
             >
               My Bookings
             </Link>
           )}
-        </nav>
-
-        <div className="flex shrink-0 items-center gap-2">
           {showSignIn ? (
             <>
               <SignInButton mode="modal">
@@ -77,24 +59,13 @@ export function Navbar() {
               </SignUpButton>
             </>
           ) : (
-            <>
-              <Link
-                href="/bookings"
-                className={cn(
-                  buttonVariants({ variant: "outline" }),
-                  "hidden rounded-full sm:inline-flex"
-                )}
-              >
-                My Bookings
-              </Link>
-              <UserButton />
-            </>
+            <UserButton />
           )}
           <AuthBookButton className="hidden rounded-full px-5 md:inline-flex">
-            Book Cleaning
+            Book
           </AuthBookButton>
           <button
-            className="rounded-lg p-2 lg:hidden"
+            className="rounded-lg p-2 md:hidden"
             onClick={() => setOpen((v) => !v)}
             aria-label="Toggle menu"
           >
@@ -104,46 +75,34 @@ export function Navbar() {
       </div>
 
       {open && (
-        <div className="border-t border-border bg-background px-4 py-4 lg:hidden">
-          <div className="flex flex-col gap-1">
-            {links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setOpen(false)}
-                className="rounded-xl px-3 py-3 text-sm text-muted-foreground"
-              >
-                {link.label}
-              </Link>
-            ))}
+        <div className="border-t border-border bg-white px-4 py-4 md:hidden">
+          <div className="flex flex-col gap-2">
             {isSignedIn && (
               <Link
                 href="/bookings"
                 onClick={() => setOpen(false)}
-                className="rounded-xl px-3 py-3 text-sm font-medium text-foreground"
+                className="rounded-xl px-3 py-3 text-sm font-medium"
               >
                 My Bookings
               </Link>
             )}
-            {showSignIn && (
-              <div className="mt-1 flex gap-2 px-3 sm:hidden">
-                <SignUpButton mode="modal">
-                  <button
-                    type="button"
-                    onClick={() => setOpen(false)}
-                    className={cn(
-                      buttonVariants({ variant: "outline" }),
-                      "flex-1 rounded-full"
-                    )}
-                  >
-                    Sign up
-                  </button>
-                </SignUpButton>
-              </div>
-            )}
+            <Link
+              href="/#how"
+              onClick={() => setOpen(false)}
+              className="rounded-xl px-3 py-3 text-sm text-muted-foreground"
+            >
+              How it works
+            </Link>
+            <Link
+              href="/#faq"
+              onClick={() => setOpen(false)}
+              className="rounded-xl px-3 py-3 text-sm text-muted-foreground"
+            >
+              FAQ
+            </Link>
             <AuthBookButton
               onNavigate={() => setOpen(false)}
-              className="mt-2 h-12 rounded-full md:hidden"
+              className="mt-2 h-12 rounded-full"
             >
               Book Cleaning
             </AuthBookButton>

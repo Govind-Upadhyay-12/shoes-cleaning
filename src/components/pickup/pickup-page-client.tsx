@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth, useUser, SignInButton } from "@clerk/nextjs";
+import { useAuth, SignInButton } from "@clerk/nextjs";
 import { AddressForm } from "@/components/pickup/address-form";
 import { PICKUP_SLOTS } from "@/constants";
 import type { OrderRecord, PickupDetails, ShoeAnalysis } from "@/types";
@@ -14,7 +14,6 @@ import { cn } from "@/lib/utils";
 export function PickupPageClient() {
   const router = useRouter();
   const { isLoaded, isSignedIn } = useAuth();
-  const { user } = useUser();
   const [analysis, setAnalysis] = useState<ShoeAnalysis | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -126,30 +125,19 @@ export function PickupPageClient() {
 
   return (
     <div className="mx-auto max-w-xl px-4 py-10 sm:px-6">
-      <div className="mb-8">
-        <p className="text-sm font-medium text-primary">Book cleaning</p>
-        <h1 className="mt-2 text-3xl font-semibold tracking-tight">
-          Confirm pickup
-        </h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Signed in as{" "}
-          {user?.primaryEmailAddress?.emailAddress || user?.fullName}. Booking
-          opens WhatsApp.{" "}
-          <span className="font-medium text-foreground">Pay after cleaning.</span>
-        </p>
-        <p className="mt-3 rounded-2xl bg-accent px-3 py-2 text-sm text-primary">
-          {displayShoeTitle(analysis)} · {analysis.recommended_service} ·{" "}
-          {formatINR(quote.price)} · {quote.deliveryLabel}
-        </p>
-      </div>
+      <h1 className="text-3xl font-semibold tracking-tight">Pickup details</h1>
+      <p className="mt-2 text-sm text-muted-foreground">
+        {displayShoeTitle(analysis)} · {formatINR(quote.price)} ·{" "}
+        {quote.deliveryLabel}. Pay after cleaning.
+      </p>
 
       {error && (
-        <p className="mb-4 rounded-xl bg-red-50 px-3 py-2 text-sm text-destructive">
-          {error}
-        </p>
+        <p className="mt-4 text-sm text-destructive">{error}</p>
       )}
 
-      <AddressForm onSubmit={onSubmit} loading={loading} />
+      <div className="mt-8">
+        <AddressForm onSubmit={onSubmit} loading={loading} />
+      </div>
     </div>
   );
 }

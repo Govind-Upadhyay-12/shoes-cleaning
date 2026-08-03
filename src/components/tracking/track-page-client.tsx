@@ -7,12 +7,12 @@ import { buttonVariants } from "@/components/ui/button";
 import type { OrderRecord } from "@/types";
 import { loadOrder } from "@/utils/storage";
 import { displayShoeTitle, formatINR } from "@/utils/pricing";
+import { getEstimatedDelivery } from "@/utils/booking-display";
 import { cn } from "@/lib/utils";
 
 export function TrackPageClient({ orderId }: { orderId: string }) {
   const [order, setOrder] = useState<OrderRecord | null>(null);
   const [loading, setLoading] = useState(true);
-  const [paymentStatus, setPaymentStatus] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -33,7 +33,6 @@ export function TrackPageClient({ orderId }: { orderId: string }) {
               statusIndex: data.statusIndex ?? 1,
               paymentStatus: data.paymentStatus,
             });
-            setPaymentStatus(data.paymentStatus);
             return;
           }
         }
@@ -41,11 +40,7 @@ export function TrackPageClient({ orderId }: { orderId: string }) {
         // fall back to local cache
       }
 
-      if (!cancelled) {
-        const local = loadOrder(orderId);
-        setOrder(local);
-        setPaymentStatus(local?.paymentStatus || null);
-      }
+      if (!cancelled) setOrder(loadOrder(orderId));
     }
 
     load().finally(() => {
@@ -60,57 +55,53 @@ export function TrackPageClient({ orderId }: { orderId: string }) {
   if (loading) {
     return (
       <div className="flex min-h-[50vh] items-center justify-center text-muted-foreground">
-        Loading order...
+        Loading...
       </div>
     );
   }
 
   if (!order) {
     return (
-      <div className="mx-auto max-w-xl px-4 py-20 text-center">
+      <div className="mx-auto max-w-lg px-4 py-20 text-center">
         <h1 className="text-2xl font-semibold">Order not found</h1>
-        <p className="mt-2 text-muted-foreground">
-          Start a new estimate to book pickup.
-        </p>
         <Link
-          href="/upload"
+          href="/bookings"
           className={cn(buttonVariants(), "mt-6 inline-flex rounded-full")}
         >
-          Get Instant Estimate
+          My Bookings
         </Link>
       </div>
     );
   }
 
+  const eta = getEstimatedDelivery(order.createdAt, order.quote.etaHours);
+  const delivered = order.statusIndex >= 6;
+
   return (
     <div className="mx-auto max-w-xl px-4 py-10 sm:px-6">
-      <div className="mb-8">
-        <p className="text-sm font-medium text-primary">Live tracking</p>
-        <h1 className="mt-2 text-3xl font-semibold tracking-tight">
-          Order {order.id}
-        </h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          {displayShoeTitle(order.analysis)} · {formatINR(order.quote.price)} ·{" "}
-          {order.quote.deliveryLabel}
-        </p>
-        <p className="mt-2 text-sm font-medium text-primary">
-          Payment:{" "}
-          {paymentStatus === "paid"
-            ? "Paid"
-            : "Pay after cleaning is done"}
-        </p>
-      </div>
+      <p className="text-sm text-muted-foreground">Order {order.id}</p>
+      <h1 className="mt-1 text-3xl font-semibold tracking-tight">
+        {displayShoeTitle(order.analysis)}
+      </h1>
+      <p className="mt-2 text-muted-foreground">
+        {formatINR(order.quote.price)}
+        {" · "}
+        {delivered ? "Delivered" : eta.remainingLabel}
+      </p>
+      {!delivered && (
+        <p className="mt-1 text-sm text-primary">Ready by {eta.label}</p>
+      )}
 
-      <div className="rounded-[2rem] border border-border bg-white p-6 shadow-sm">
+      <div className="mt-10">
         <Timeline currentIndex={order.statusIndex} />
       </div>
 
-      <div className="mt-6 flex flex-col gap-2 sm:flex-row">
+      <div className="mt-8 flex flex-col gap-2">
         <Link
           href="/bookings"
           className={cn(
-            buttonVariants({ variant: "outline" }),
-            "flex h-12 flex-1 items-center justify-center rounded-full"
+            buttonVariants(),
+            "flex h-12 items-center justify-center rounded-full"
           )}
         >
           My Bookings
@@ -118,11 +109,11 @@ export function TrackPageClient({ orderId }: { orderId: string }) {
         <Link
           href="/"
           className={cn(
-            buttonVariants({ variant: "outline" }),
-            "flex h-12 flex-1 items-center justify-center rounded-full"
+            buttonVariants({ variant: "ghost" }),
+            "flex h-11 items-center justify-center rounded-full"
           )}
         >
-          Back to home
+          Home
         </Link>
       </div>
     </div>
