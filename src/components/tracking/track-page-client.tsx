@@ -105,15 +105,26 @@ export function TrackPageClient({ orderId }: { orderId: string }) {
         <Timeline currentIndex={order.statusIndex} />
       </div>
 
-      <Link
-        href="/"
-        className={cn(
-          buttonVariants({ variant: "outline" }),
-          "mt-6 flex h-12 w-full items-center justify-center rounded-full"
-        )}
-      >
-        Back to home
-      </Link>
+      <div className="mt-6 flex flex-col gap-2 sm:flex-row">
+        <Link
+          href="/bookings"
+          className={cn(
+            buttonVariants({ variant: "outline" }),
+            "flex h-12 flex-1 items-center justify-center rounded-full"
+          )}
+        >
+          My Bookings
+        </Link>
+        <Link
+          href="/"
+          className={cn(
+            buttonVariants({ variant: "outline" }),
+            "flex h-12 flex-1 items-center justify-center rounded-full"
+          )}
+        >
+          Back to home
+        </Link>
+      </div>
     </div>
   );
 }

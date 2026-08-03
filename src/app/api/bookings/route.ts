@@ -137,10 +137,25 @@ export async function GET() {
   }
 
   await connectDB();
-  const bookings = await Booking.find({ clerkId: userId })
+  const rows = await Booking.find({ clerkId: userId })
     .sort({ createdAt: -1 })
     .limit(50)
     .lean();
+
+  const bookings = rows.map((booking) => ({
+    id: booking.orderId,
+    orderId: booking.orderId,
+    analysis: booking.analysis,
+    quote: booking.quote,
+    pickup: booking.pickup,
+    createdAt: booking.createdAt,
+    status: booking.status,
+    statusIndex: booking.statusIndex,
+    paymentStatus: booking.paymentStatus,
+    paymentMethod: booking.paymentMethod,
+    userName: booking.userName,
+    userEmail: booking.userEmail,
+  }));
 
   return NextResponse.json({ bookings });
 }

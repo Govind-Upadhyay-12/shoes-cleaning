@@ -40,6 +40,14 @@ export function Navbar() {
               {link.label}
             </Link>
           ))}
+          {isSignedIn && (
+            <Link
+              href="/bookings"
+              className="font-medium text-foreground transition hover:text-primary"
+            >
+              My Bookings
+            </Link>
+          )}
         </nav>
 
         <div className="flex shrink-0 items-center gap-2">
@@ -69,11 +77,20 @@ export function Navbar() {
               </SignUpButton>
             </>
           ) : (
-            <UserButton />
+            <>
+              <Link
+                href="/bookings"
+                className={cn(
+                  buttonVariants({ variant: "outline" }),
+                  "hidden rounded-full sm:inline-flex"
+                )}
+              >
+                My Bookings
+              </Link>
+              <UserButton />
+            </>
           )}
-          <AuthBookButton
-            className="hidden rounded-full px-5 md:inline-flex"
-          >
+          <AuthBookButton className="hidden rounded-full px-5 md:inline-flex">
             Book Cleaning
           </AuthBookButton>
           <button
@@ -99,6 +116,15 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
+            {isSignedIn && (
+              <Link
+                href="/bookings"
+                onClick={() => setOpen(false)}
+                className="rounded-xl px-3 py-3 text-sm font-medium text-foreground"
+              >
+                My Bookings
+              </Link>
+            )}
             {showSignIn && (
               <div className="mt-1 flex gap-2 px-3 sm:hidden">
                 <SignUpButton mode="modal">
